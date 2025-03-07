@@ -1,3 +1,7 @@
+networks:
+  patient_network:
+    driver: bridge
+
 services:
   backend:
     build: ./server
@@ -11,6 +15,8 @@ services:
     depends_on:
       - db
     command: npm run dev
+    networks:
+      - patient_network
 
   frontend:
     build: ./client
@@ -21,6 +27,8 @@ services:
       - /app/node_modules
     stdin_open: true
     command: npm run dev
+    networks:
+      - patient_network
 
   db:
     image: mysql:8.0
@@ -32,6 +40,8 @@ services:
       - "3307:3306"
     volumes:
       - db_data:/var/lib/mysql
+    networks:
+      - patient_network
 
 volumes:
   db_data:
