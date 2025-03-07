@@ -6,11 +6,11 @@ const prisma = new PrismaClient();
 
 export class PatientRepository implements IPatientRepository {
     
-    public async createPatient(patient: Prisma.PatientCreateInput): Promise<number> {
+    public async createPatient(patient: Prisma.PatientCreateInput): Promise<Patient> {
         const createdPatient = await prisma.patient.create({
             data: patient,
         });
-        return createdPatient.id;
+        return createdPatient;
     }
 
     public async getAllPatientsWithPagination(
