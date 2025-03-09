@@ -3,7 +3,8 @@ import cors from "cors";
 import dotenv from "dotenv";
 import mysql from "mysql2/promise";
 import { CustomError } from './utils/customError';
-import patientRoutes from './routes/patientRoutes';
+import patientRouter from './routes/patientRoutes';
+import pool from "./config/db"; 
 
 dotenv.config();
 
@@ -13,18 +14,7 @@ app.use(express.json());
 
 const PORT = process.env.PORT || 5000;
 
-app.use('/api/patients', patientRoutes);
-
-const pool = mysql.createPool({
-  host: process.env.DB_HOST,        
-  user: process.env.DB_USER,        
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME,    
-  port: Number(process.env.DB_PORT) || 3306, 
-  waitForConnections: true, 
-  connectionLimit: 10,      
-  queueLimit: 0             
-});
+app.use('/api/patients', patientRouter);
 
 export default pool;
 

@@ -1,34 +1,56 @@
-import { PrismaClient, Prisma, Patient } from "@prisma/client";
 import { IPatientRepository } from "../interfaces/IPatientRepository";
-import { IPaginationParameters } from "../interfaces/IPaginationParameters";
-
-const prisma = new PrismaClient();
+import { CreatePatientDTO } from "../interfaces/DTOs/createPatientDTO";
+import Patient from "../models/patient";
+import pool from "../config/db";
+import { ResultSetHeader, RowDataPacket } from "mysql2";
 
 export class PatientRepository implements IPatientRepository {
-    
-    public async createPatient(patient: Prisma.PatientCreateInput): Promise<Patient> {
-        const createdPatient = await prisma.patient.create({
-            data: patient,
-        });
-        return createdPatient;
+    async createPatient(patientData: CreatePatientDTO): Promise<Patient> {
+        const connection = await pool.getConnection();
+        try {
+            const { fullName, email, phoneNumber } = patientData;
+
+            const [result] = await connection.execute<ResultSetHeader>(
+                `INSERT INTO patients (fullName, email, phoneNumber) VALUES (?, ?, ?)`,
+                [fullName, email, phoneNumber]
+            );
+
+            return new Patient({
+                id: result.insertId,
+                fullName,
+                email,
+                phoneNumber,
+                createdAt: new Date()
+            });
+        } catch (error) {
+            throw error;
+        } finally {
+            connection.release();
+        }
     }
 
-    public async getAllPatientsWithPagination(
-        parameters: IPaginationParameters
-    ): Promise<{ data: Patient[]; total: number }> {
-        const { page, limit } = parameters;
-        const offset = (page - 1) * limit;
+    async getAllPatients(): Promise<Patient[]> { 
+        const connection = await pool.getConnection();
+        try {
+            const [rows] = await connection.execute<RowDataPacket[]>(
+                `SELECT id, fullName, email, phoneNumber, createdAt FROM patients ORDER BY createdAt DESC`
+            );
 
-        const data = await prisma.patient.findMany({
-            skip: offset, 
-            take: limit,
-            orderBy: {
-                createdAt: "desc", 
-            },
-        });
+            console.log("🛠️ Filas devueltas por MySQL:", rows);
 
-        const total = await prisma.patient.count();
-
-        return { data, total };
+            return rows.map(row => 
+                new Patient({
+                    id: row.id as number,
+                    fullName: row.fullName as string,
+                    email: row.email as string,
+                    phoneNumber: row.phoneNumber as string,
+                    createdAt: new Date(row.createdAt as string),
+                })
+            );
+        } catch (error) {
+            throw error;
+        } finally {
+            connection.release();
+        }
     }
 }

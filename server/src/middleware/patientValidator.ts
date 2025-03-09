@@ -46,11 +46,7 @@ const documentPhotoValidation = () => Joi.alternatives()
         Joi.binary().messages({
             'binary.base': 'Document photo must be a valid binary file'
         })
-    )
-    .required()
-    .messages({
-        'any.required': 'Document photo is required'
-    });
+    );
 
 export const patientSchema = Joi.object({
     name: nameValidation(),

@@ -1,4 +1,5 @@
-import { Patient } from "@prisma/client";
+import Patient from "../models/patient";
+
 
 export interface IPatientPaginatedResult {
     data: Patient[];
