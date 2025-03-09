@@ -25,8 +25,9 @@ services:
     volumes:
       - ./client:/app
       - /app/node_modules
-    stdin_open: true
     command: npm run dev
+    env_file:
+      - ./client/.env
     networks:
       - patient_network
 
