@@ -16,7 +16,7 @@ export const fetchPatients = createAsyncThunk(
 
   export const createPatient = createAsyncThunk(
     "patients/createPatient",
-    async (patientData: { fullName: string; email: string; countryCode: string; phoneNumber: string }, thunkAPI) => {
+    async (patientData: { fullName: string; email: string; phoneNumber: string }, thunkAPI) => {
       try {
         const response = await axiosInstance.post("/api/patients", patientData, {
           headers: {
