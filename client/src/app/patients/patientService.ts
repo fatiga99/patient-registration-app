@@ -16,11 +16,11 @@ export const fetchPatients = createAsyncThunk(
 
   export const createPatient = createAsyncThunk(
     "patients/createPatient",
-    async (formData: FormData, thunkAPI) => {
+    async (patientData: { fullName: string; email: string; countryCode: string; phoneNumber: string }, thunkAPI) => {
       try {
-        const response = await axiosInstance.post("/api/patients", formData, {
+        const response = await axiosInstance.post("/api/patients", patientData, {
           headers: {
-            "Content-Type": "multipart/form-data",
+            "Content-Type": "application/json",
           },
         });
         return response.data;

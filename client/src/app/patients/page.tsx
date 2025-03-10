@@ -6,6 +6,7 @@ import { AppDispatch, RootState } from "../store";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { fetchPatients } from "./patientService";
+import BaseButton from "../components/baseButton";
 
 
  const PatientsPage: React.FC = () => {
@@ -25,13 +26,23 @@ import { fetchPatients } from "./patientService";
     }, [dispatch]);
 
     return (
-    <section>
-        <h1>Lista de Pacientes</h1>
-        <div className="flex flex-wrap flex-col gap-4 mt-9 w-full justify-start">
-                {loading && <p>Loading Patients...</p>}
-                {error && <p>Error loading patients: {error}</p>}
-                {patients && <PatientsList patients={patients} />}
+    <section className="flex flex-col items-center justify-center min-h-screen w-full px-6 py-15">
+        <div className="bg-white shadow-lg rounded-lg p-8 w-full max-w-4xl text-center">
+            <h1 className="text-4xl md:text-5xl font-bold text-[#120E21] my-8">
+                Patient List
+            </h1>
+            <BaseButton 
+                onClick={handleCreateClick} 
+                variant="primary" 
+            >
+                Add Patient
+            </BaseButton>
+            <div className="w-full ">
+                    {loading && <p>Loading Patients...</p>}
+                    {error && <p className="text-red-500">Error loading patients: {error}</p>}
+                    {patients && <PatientsList patients={patients} />}
             </div>
+        </div>
     </section>
     );
 };

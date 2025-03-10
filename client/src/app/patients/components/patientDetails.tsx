@@ -6,6 +6,7 @@ import { AppDispatch, RootState } from '@/app/store';
 import { useRouter } from 'next/navigation';
 import { fetchPatients } from '../patientService';
 import { formatDate } from '@/utils/formatDate';
+import BaseButton from '@/app/components/baseButton';
 
 interface PatientDetailsProps {
     patientId: number;
@@ -54,12 +55,12 @@ const PatientDetails: React.FC<PatientDetailsProps> = ({ patientId }) => {
                 </p>
             </div>
 
-            <button 
+            <BaseButton 
+                variant="back"
                 onClick={() => router.push("/patients")}
-                className="mt-6 px-4 py-2 bg-[#9378FF] text-white rounded-lg hover:bg-[#7a5cff] cursor-pointer transition"
             >
                 Back
-            </button>
+            </BaseButton>
         </div>
     </div>
     )

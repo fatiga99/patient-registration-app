@@ -15,7 +15,6 @@ export class PatientController {
 
             res.status(200).json(patients);
         } catch (error) {
-            console.error("❌ Error en getPatients:", error);
             next(error);
         }
     }

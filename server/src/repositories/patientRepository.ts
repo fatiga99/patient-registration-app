@@ -36,8 +36,6 @@ export class PatientRepository implements IPatientRepository {
                 `SELECT id, fullName, email, phoneNumber, createdAt FROM patients ORDER BY createdAt DESC`
             );
 
-            console.log("🛠️ Filas devueltas por MySQL:", rows);
-
             return rows.map(row => 
                 new Patient({
                     id: row.id as number,

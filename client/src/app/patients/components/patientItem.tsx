@@ -18,9 +18,9 @@ const PatientItem: React.FC<PatientItemProps> = ({ patient }) => {
     return (
         <div
             onClick={handleClick}
-            className="max-w-2xl w-full  h-[103px] bg-[#FBEEFF] rounded-[30px] text-center cursor-pointer flex hover:shadow-lg transition-shadow"
+            className="max-w-2xl w-full h-[103px] bg-[#FBEEFF] rounded-[30px] text-center cursor-pointer flex justify-center  hover:shadow-lg transition-shadow"
         >
-            <div className="ml-[16px] mt-[26px]">
+            <div className="ml-[16px] mt-[26px] text-center">
                 <h2 className="text-[20px] font-redhat font-bold leading-[26.46px] text-[#000000]">
                     {patient.fullName}
                 </h2>
