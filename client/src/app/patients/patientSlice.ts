@@ -10,7 +10,7 @@ const initialState: PatientsState = {
 }
 
 const patientsSlice = createSlice({
-    name: 'pateints',
+    name: 'patients',
     initialState,
     reducers: {
         setPatients: (state, action: PayloadAction<Patient[]>) => {

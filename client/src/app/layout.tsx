@@ -1,5 +1,5 @@
+"use client";
 
-import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Provider } from "react-redux";
 import store from "./store";
@@ -15,10 +15,7 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: "Patient Registration App",
-  description: "Lightit Full Stack Challenge",
-};
+
 
 export default function RootLayout({
   children,
