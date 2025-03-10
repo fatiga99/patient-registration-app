@@ -24,11 +24,14 @@ const nameValidation = () => Joi.string()
 
 const emailValidation = () => Joi.string()
     .email()
+    .regex(/^[a-zA-Z0-9._%+-]+@gmail\.com$/) 
     .required()
     .messages({
         'string.email': patientValidationMessages.email.invalidFormat,
+        'string.pattern.base': 'Only Gmail addresses are allowed',
         'any.required': patientValidationMessages.email.required
     });
+
 
 const phoneNumberValidation = () => Joi.string()
     .pattern(new RegExp(/^\+?[0-9]{9,15}$/))
@@ -38,30 +41,15 @@ const phoneNumberValidation = () => Joi.string()
         'any.required': patientValidationMessages.phoneNumber.required
     });
 
-const documentPhotoValidation = () => Joi.alternatives()
-    .try(
-        Joi.string().uri().messages({
-            'string.uri': 'Document photo must be a valid URL'
-        }),
-        Joi.binary().messages({
-            'binary.base': 'Document photo must be a valid binary file'
-        })
-    );
-
 export const patientSchema = Joi.object({
-    name: nameValidation(),
+    fullName: nameValidation(),
     email: emailValidation(),
     phoneNumber: phoneNumberValidation(),
-    documentPhoto: documentPhotoValidation()
 });
 
 export const validatePatient = (req: Request, res: Response, next: NextFunction): void => {
-    const combinedData = {
-        ...req.body,
-        documentPhoto: req.file ? req.file.buffer : undefined, 
-    };
 
-    const { error } = patientSchema.validate(combinedData, { abortEarly: false });
+    const { error } = patientSchema.validate(req.body, { abortEarly: false });
 
     if (error) {
         console.error('Validation error:', error.details.map((d) => d.message));

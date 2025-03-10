@@ -23,6 +23,11 @@ export class PatientRepository implements IPatientRepository {
                 createdAt: new Date()
             });
         } catch (error) {
+            if (error instanceof Error) { 
+                if ((error as any).code === "ER_DUP_ENTRY") { //unique from sql
+                    throw new Error("Email already exists");
+                }
+            }
             throw error;
         } finally {
             connection.release();
