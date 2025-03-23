@@ -5,6 +5,7 @@ import pool from "../config/db";
 import { ResultSetHeader, RowDataPacket } from "mysql2";
 
 export class PatientRepository implements IPatientRepository {
+    
     async createPatient(patientData: CreatePatientDTO): Promise<Patient> {
         const connection = await pool.getConnection();
         try {

@@ -3,7 +3,7 @@ import { handleAxiosError } from '@/utils/axiosErrorHandler';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 export const fetchPatients = createAsyncThunk(
-    "patients/fetchPatients",
+    "patients/fetchPatients", 
     async (_, thunkAPI) => {
       try {
         const response = await axiosInstance.get("/api/patients");
@@ -15,7 +15,7 @@ export const fetchPatients = createAsyncThunk(
   );
 
   export const createPatient = createAsyncThunk(
-    "patients/createPatient",
+    "patients/createPatient", // del slice
     async (patientData: { fullName: string; email: string; phoneNumber: string }, thunkAPI) => {
       try {
         const response = await axiosInstance.post("/api/patients", patientData, {

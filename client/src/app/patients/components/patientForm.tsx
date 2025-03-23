@@ -14,8 +14,18 @@ import Modal from "@/app/components/Modal";
 const PatientForm: React.FC = () => {
   const router = useRouter();
   const dispatch: AppDispatch = useDispatch();
-  const [modalState, setModalState] = useState<{ isOpen: boolean; title: string; message: string; variant: "success" | "error" }>(
-    { isOpen: false, title: "", message: "", variant: "success" }
+  const [modalState, setModalState] = useState<{ 
+      isOpen: boolean;
+      title: string;
+      message: string;
+      variant: "success" | "error" 
+    }>(
+    { 
+      isOpen: false, 
+      title: "", 
+      message: "", 
+      variant: "success" 
+    }
   );
 
   const { values, errors, touched, handleChange, handleBlur, handleSubmit, isSubmitting } =
@@ -44,7 +54,9 @@ const PatientForm: React.FC = () => {
             message: "Patient successfully registered!",
             variant: "success",
           });
+
           setTimeout(() => router.push("/patients"), 2000);
+          
         } catch (error) {
           setModalState({
             isOpen: true,
